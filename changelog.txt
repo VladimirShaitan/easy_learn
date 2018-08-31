@@ -1,0 +1,43 @@
+==================================================================================================
+10th March 2017
+--Removed the settings of the order fields that should be edited
+--Added place to edit order fields in admin area
+--added messages under each order in admin
+--instroduce message delete in admin
+---introduced message edit in admin
+--introduced order ratings tab
+---introduced delete order rating
+
+Bugs fixed
+---issues with add payouts
+---fixed issue that when order is assigned to writer, customer was ot getting email 
+
+files touched
+---controller order
+---orders, order file in views
+---Siteconfigsconfigs model
+---Siteconfigs 
+---Messages model
+---messages controller 
+---views/opmaster/orders/view
+---site configs index in views
+---dropped the table order fields
+
+
+===================================================================================================
+
+7th March 2017
+
+----fixed the number of icons in the rate from 6 to 5
+----fixed the error that it was displaying 4/5 and another 4/5 in order rating area
+----fixed issue of adding academic level in dashboard in site configs
+----when a file is uplaoded eg 'thse.yestere' the files uplaod takes the name as 'thse_yestere' I have use pregreplace
+
+--Adjust
+---File attachement be sent when writer uploads, file to be sent custom
+
+Files touched
+1) views/opmaster/configs/index.php
+2) controllers/order.php
+view-assigned, 
+view_myorders
