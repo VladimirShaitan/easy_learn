@@ -1855,6 +1855,61 @@ public function writer_completed($limit, $start) {
             $this->db->update('writers');
         
         }
+        
+
+
+        public function mngrNewNoticeMes($colName, $oId, $wait_accept = FALSE){
+
+           if($wait_accept){
+            $this->db->select('manager_id');
+            $this->db->where('orderid', $oId);
+            $ord_mIds_query = $this->db->get('orders');
+            $temp_ord_mid_arr = $ord_mIds_query->row_array();
+            // print_r($temp_ord_mid_arr) ;
+            $ord_mIds = array();
+            if($ord_mIds_query->num_rows() > 0){
+              foreach ($temp_ord_mid_arr as $mid_ord) {
+                array_push($ord_mIds, $mid_ord);
+              }
+              // array_push($ord_mIds, '2562');
+              $ord_mIds = array_unique($ord_mIds);
+              if($ord_mIds[0] === '2562'){
+                return false;
+              }
+
+              // return $ord_mIds;
+
+
+            }
+
+
+          }
+
+          $oi = $oId;
+
+        if(!$wait_accept){
+          $this->db->select('writer_id');
+          $this->db->from('writers');
+          $this->db->where('writer_level', 'admin');
+          $mngr_ids = $this->db->get();
+
+          $manager_ids = array();
+             foreach($mngr_ids->result_array() as $id){
+                foreach ($id as $id2) {
+                    array_push($manager_ids, $id2);
+                }
+             }                
+          } else {
+            $manager_ids = $ord_mIds;
+          }
+          // return $manager_ids;
+            $this->db->set($colName, "CONCAT(".$colName.",', ','".$oi."')", FALSE);
+            $this->db->where_in('writer_id', $manager_ids);
+            $this->db->update('writers');
+
+        }
+
+
 
         public function gwe($writerid){
           $this->db->select('email');
@@ -2013,9 +2068,11 @@ public function writer_completed($limit, $start) {
               } else {return false;}
 
             } else {
-              $this->db->set('wr_files_notice', "CONCAT(wr_files_notice,', ','".$data['wr_files_notice']."')", FALSE);
-              $this->db->where('writer_id', $p_writer);
-              $this->db->update('writers');
+                if($this->session->userdata('writer_id') != $p_writer){
+                  $this->db->set('wr_files_notice', "CONCAT(wr_files_notice,', ','".$data['wr_files_notice']."')", FALSE);
+                  $this->db->where('writer_id', $p_writer);
+                  $this->db->update('writers');
+                }
             }
             return false;
         }

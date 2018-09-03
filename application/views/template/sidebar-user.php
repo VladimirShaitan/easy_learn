@@ -100,7 +100,9 @@ if($this->session->userdata('user_level') === 'writer')
             }
         }
         if(!empty($bid_order[0])){
+
             $bid_order = explode (", ", substr ($bid_order[0], 2));
+            $bid_order = array_unique($bid_order);
         } else {
           unset($bid_order);
         }
@@ -269,8 +271,6 @@ if(!empty($orderidsCl)){
             <?php } ?>
           </span>
         </div> 
-
-
         <div data-id="orders_auctsion" class="neworders row midneword" >
         <p class="not_zag">Ставки по заказам:</p>
         <span class="put_here">
@@ -396,7 +396,7 @@ if(!empty($orderidsCl)){
               <a class="ordMesLinkPush" href="<?php echo ci_site_url('order/view/'.$order['orderid'].'#'.$order['from_who']); ?>">
                 <?php echo $order['orderid']; ?>
                 
-                <span data-toggle="tooltip" data-placement="top" <?php if($order['from_who'] === 'manager') { echo 'title="От Менеджера"';} else {echo 'title="От Автора"';}?> class="mes_who_top_push">
+                <span data-toggle="tooltip" data-placement="top" <?php if($order['from_who'] === 'manager') { echo 'title="От Менеджера"';} elseif($order['from_who'] === 'admin'){echo 'title="От Администратора"';} else {echo 'title="От Автора"';}?> class="mes_who_top_push">
                   <?php if($order['from_who'] === 'manager') {
                     echo "М";
                   } elseif ($order['from_who'] === 'admin') {

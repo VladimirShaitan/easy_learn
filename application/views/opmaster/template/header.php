@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
     <title>Панель</title>
-    <meta content='lab2023' name='author'>
+    <!-- <meta content='lab2023' name='author'> -->
     <meta content='' name='description'>
     <meta content='' name='keywords'>
     <link rel="shortcut icon" href="/wp-content/uploads/2017/11/logo-FI.png" type="image/png">
@@ -214,6 +214,8 @@ $newChatMans = createSuperNotice('mngr_new_order_mes', $mid);
                        echo "АЗ";
                      } elseif(explode('#', $newChat)[1] === 'z_a') {
                        echo "ЗА";
+                     } elseif(explode('#', $newChat)[1] === 'admin') {
+                       echo "Адм";
                      }?>
                 </span> 
                   
@@ -466,7 +468,7 @@ function createNoticeTemplate(id, supClass, colName, linkPart){
       case 'z_a' : fh = 'ЗА'; break;
       case 'avtor' : fh = 'А'; break;
       case 'zakaz' : fh = 'З'; break;
-      // case 'admin' : fh = 'Адм'; break;
+      case 'admin' : fh = 'Адм'; break;
       // default : fh = 'АЗ'; break;
     }
 

@@ -51,9 +51,11 @@ class Ordersed extends CI_Controller
                     $client_paid = $this->input->post('client_paid');
 
                     if($order_status_now === 'Revision' ){
-                        $order_st_my = 'onlyAvtorDoplata';
                         if($doplata_avtor === 'true'){
+                           $order_st_my = 'onlyAvtorDoplata';
                            $client_paid = 'paid_client';
+                        } else {
+                            $order_st_my = 'pending';
                         }
                     } else {
                         // if($doplata_avtor === 'true'){

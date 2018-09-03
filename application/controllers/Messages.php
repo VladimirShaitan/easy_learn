@@ -448,23 +448,30 @@ public function post_message_ajax() {
                 $mgr_id = $this->Messages_model->getOrderMngrjustId($orderid);
                 // print_r();
                 if(!empty($mgr_id['manager_id'])){
+
+                    if($from_who === 'admin' && ($ch_res === 'zakaz' || $ch_res === 'avtor') ){
+                       $a = $this->Orders_model->mngrNewNoticeMes('mngr_new_order_mes', $orderid.'#'.$from_who, 1);
+                    }
+
+                    // print_r($a);
+
                     if( ($from_who != 'manager' && $from_who != 'admin') && $ch_res === 'manager'){
-                        $this->Orders_model->mngrNewNotice('mngr_new_order_mes', $orderid.'#'.$from_who, 1);
+                        $this->Orders_model->mngrNewNoticeMes('mngr_new_order_mes', $orderid.'#'.$from_who, 1);
                     }
 
 
                     if($from_who === 'avtor' && $ch_res === 'zakaz'){
-                        $this->Orders_model->mngrNewNotice('mngr_new_order_mes', $orderid.'#'.substr($from_who, 0, 1).'_'.substr($ch_res, 0, 1), 1);
+                        $this->Orders_model->mngrNewNoticeMes('mngr_new_order_mes', $orderid.'#'.substr($from_who, 0, 1).'_'.substr($ch_res, 0, 1), 1);
                     }
 
                     if($from_who === 'zakaz' && $ch_res === 'avtor'){
-                        $this->Orders_model->mngrNewNotice('mngr_new_order_mes', $orderid.'#'.substr($ch_res, 0, 1).'_'.substr($from_who, 0, 1), 1);
+                        $this->Orders_model->mngrNewNoticeMes('mngr_new_order_mes', $orderid.'#'.substr($ch_res, 0, 1).'_'.substr($from_who, 0, 1), 1);
                     }
 
 
                 } else {
                     if($from_who != 'manager' && $from_who != 'admin'){
-                        $this->Orders_model->mngrNewNotice('mngr_new_order_mes', $orderid.'#'.$from_who);
+                        $this->Orders_model->mngrNewNoticeMes('mngr_new_order_mes', $orderid.'#'.$from_who);
                     }
                 }
 
